@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add User</title>
+    
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+
+    <script>
+      // Your web app's Firebase configuration
+    var firebaseConfig = {
+                apiKey: "AIzaSyB-vGEOyySC4JMYdtG1Ret4pbiZLmhknLs",
+                authDomain: "jeanycar-25a07.firebaseapp.com",
+                databaseURL: "https://jeanycar-25a07-default-rtdb.asia-southeast1.firebasedatabase.app/",
+                projectId: "jeanycar-25a07",
+                storageBucket: "jeanycar-25a07.appspot.com",
+                messagingSenderId: "469828085729",
+                appId: "1:469828085729:web:4bc30a96b8e227f0c9d4a0",
+				measurementId: "G-7WFEHXBYJP"
+
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+      function addUser() {
+        var nameInput = document.getElementById("name");
+        var emailInput = document.getElementById("email");
+        var ageInput = document.getElementById("age");
+
+        var name = nameInput.value;
+        var email = emailInput.value;
+        var age = ageInput.value;
+
+        if (name && email && age) {
+          // Get a reference to the "users" node in the database
+          var usersRef = firebase.database().ref("users");
+
+          // Use the push method to add a new user to the database
+          usersRef.push({
+            name: name,
+            email: email,
+            age: age
+          }, function(error) {
+            if (error) {
+              console.error(error);
+            } else {
+              // Clear the input fields
+              nameInput.value = "";
+              emailInput.value = "";
+              ageInput.value = "";
+
+              // Show a success message
+              window.alert("User added successfully!");
+            }
+          });
+        } else {
+          window.alert("Please fill in all fields.");
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Add User</h1>
+    <form>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name">
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email">
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age">
+
+      <button type="button" onclick="addUser()">Add User</button>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Firebase Realtime Database Example</title>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+</head>
+<body>
+  <h1>Firebase Realtime Database Example</h1>
+
+  <table id="myTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Age</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Rows will be added here dynamically by JavaScript -->
+    </tbody>
+  </table>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+                apiKey: "AIzaSyB-vGEOyySC4JMYdtG1Ret4pbiZLmhknLs",
+                authDomain: "jeanycar-25a07.firebaseapp.com",
+                databaseURL: "https://jeanycar-25a07-default-rtdb.asia-southeast1.firebasedatabase.app/",
+                projectId: "jeanycar-25a07",
+                storageBucket: "jeanycar-25a07.appspot.com",
+                messagingSenderId: "469828085729",
+                appId: "1:469828085729:web:4bc30a96b8e227f0c9d4a0",
+				measurementId: "G-7WFEHXBYJP"
+
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Get a reference to the database
+    var database = firebase.database();
+
+    // Get a reference to the table element in your HTML file
+    var table = document.getElementById("myTable");
+
+    // Set up a listener to retrieve data from the "users" node in the database
+    database.ref("users").on("value", function(snapshot) {
+      // Loop through the data and create a new row for each user
+      snapshot.forEach(function(childSnapshot) {
+        // Get the data for this user
+        var user = childSnapshot.val();
+
+        // Create a new row in the table
+        var row = table.insertRow();
+
+        // Add the user's name to the first column of the row
+        var nameCell = row.insertCell(0);
+        nameCell.innerHTML = user.name;
+
+        // Add the user's email to the second column of the row
+        var emailCell = row.insertCell(1);
+        emailCell.innerHTML = user.email;
+
+        // Add the user's age to the third column of the row
+        var ageCell = row.insertCell(2);
+        ageCell.innerHTML = user.age;
+      });
+    });
+  </script>
+</body>
+</html>
